@@ -26,9 +26,9 @@
   - 404 - Not Found
   - 500 - Internal Server Error
 
-- Postman
+- Bruno
 
-  - Postman é uma ferramenta que permite testar APIs. Com o Postman é possível enviar requisições HTTP para uma API e visualizar a resposta.
+  - Bruno é uma ferramenta que permite testar APIs. Com o Bruno é possível enviar requisições HTTP para uma API e visualizar a resposta.
 
 - 1 - Criar uma API simples com http
 
@@ -65,11 +65,38 @@
 
 - 2 - Criar uma API simples com express
 
-  - Criar projeto e instalar express
+  - Criar projeto e instalar nodemon e express
 
   ```bash
   npm init -y
+  npm install nodemon
   npm install express
+  ```
+
+  Nodemon é uma ferramenta que reinicia o servidor automaticamente sempre que um arquivo é modificado.
+
+  - Exemplo de package.json (podem reutilizar este package.json para esta aula - apenas editem o name)
+
+  ```json
+  {
+    "name": "aulaX-vX",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+      "start": "node index.js",
+      "dev": "nodemon index.js"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "dependencies": {
+      "express": "5.0.0-beta.1"
+    },
+    "devDependencies": {
+      "nodemon": "^3.0.3"
+    }
+  }
   ```
 
   - Exemplo de uma API simples criada com express:
@@ -81,7 +108,7 @@
 
   // Cria uma rota GET para a raiz do servidor
   app.get("/", (req, res) => {
-    res.send("Hello World"); // Envia a mensagem "Hello World" como resposta
+    res.send("Hello World from Express :)"); // Envia a mensagem "Hello World" como resposta
   });
 
   // O servidor irá escutar na porta 3000
@@ -103,17 +130,20 @@
   }
   ```
 
+  - JSON é frequentemente utilizado para enviar e receber dados em APIs.
+  - Com JSON é possível enviar objetos complexos, arrays, strings, números, booleanos e null.
+
 - 3 - Criar uma API simples com express e JSON
 
   - Exemplo de uma API simples criada com express que retorna um objeto JSON:
 
   ```javascript
-  const express = require("express"); // Importa o módulo express
+  const express = require("express");
 
-  const app = express(); // Cria uma instância do express - necessário para criar uma aplicação express
+  const app = express();
 
-  // Cria uma rota GET para a raiz do servidor
   app.get("/", (req, res) => {
+    // Cria um objeto JSON
     const data = {
       name: "John Doe",
       age: 30,
@@ -138,17 +168,20 @@
     const express = require("express");
     const app = express();
 
-    app.use(express.json()); // Middleware que trata os pedidos com body JSON
+    app.use(express.json()); // Middleware para fazer o parse do body da requisição para JSON automaticamente
 
+    // Array de posts com id, title e content
     let posts = [
       {id: 1, title: "Post 1", content: "Content 1"},
       {id: 2, title: "Post 2", content: "Content 2"},
     ];
 
+    // Rota GET para /posts que retorna o array de posts
     app.get("/posts", (req, res) => {
       res.json(posts);
     });
 
+    // Rota POST para /posts que recebe um post e o adiciona ao array de posts
     // BODY: {title: "Post 3", content: "Content 3"}
     app.post("/posts", (req, res) => {
       const post = req.body;
@@ -157,17 +190,7 @@
       res.json(post);
     });
 
-    // BODY: {id: 1, title: "Post 1 Updated", content: "Content 1 Updated"}
-    app.put("/posts", (req, res) => {
-      const id = req.body.id;
-      // Faz pop do post com o id recebido no body
-      const post = posts.pop((post) => post.id === id);
-      post.title = req.body.title; // Atualiza o título do post
-      post.content = req.body.content; // Atualiza o conteúdo do post
-      posts.push(post); // Adiciona o post atualizado ao array de posts
-      res.json(post);
-    });
-
+    // Rota DELETE para /posts que recebe um id e deleta o post com esse id
     // BODY: {id: 1}
     app.delete("/posts", (req, res) => {
       const id = req.body.id;
@@ -179,3 +202,7 @@
       console.log("Server running on port 3000");
     });
     ```
+
+- Apenas noções básicas de APIs e Express foram abordadas nesta aula. Na próxima aula iremos aprofundar mais em Express e também abordar Middlewares, Validação de Input e Estrutura.
+
+- Não abordamos nenhum PUT mas iremos abordar na próxima aula.

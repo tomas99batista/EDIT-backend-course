@@ -1,9 +1,9 @@
-const express = require("express"); // Importa o módulo express
+const express = require("express");
 
-const app = express(); // Cria uma instância do express - necessário para criar uma aplicação express
+const app = express();
 
-// Cria uma rota GET para a raiz do servidor
 app.get("/", (req, res) => {
+  // Cria um objeto JSON
   const data = {
     name: "John Doe",
     age: 30,
