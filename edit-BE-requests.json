@@ -1,0 +1,169 @@
+{
+  "name": "edit-BE-requests",
+  "version": "1",
+  "items": [
+    {
+      "type": "folder",
+      "name": "aula1",
+      "items": [
+        {
+          "type": "folder",
+          "name": "v4",
+          "items": [
+            {
+              "type": "http",
+              "name": "aula1-v4-post",
+              "seq": 2,
+              "request": {
+                "url": "http://localhost:3000/posts",
+                "method": "POST",
+                "headers": [],
+                "body": {
+                  "mode": "json",
+                  "json": "{\"title\": \"Post 3\", \"content\": \"Content 3\"}",
+                  "formUrlEncoded": [],
+                  "multipartForm": []
+                },
+                "script": {},
+                "vars": {},
+                "assertions": [],
+                "tests": "",
+                "auth": {
+                  "mode": "none"
+                },
+                "query": []
+              }
+            },
+            {
+              "type": "http",
+              "name": "aula1-v4-get",
+              "seq": 1,
+              "request": {
+                "url": "http://localhost:3000/posts",
+                "method": "GET",
+                "headers": [],
+                "body": {
+                  "mode": "none",
+                  "formUrlEncoded": [],
+                  "multipartForm": []
+                },
+                "script": {},
+                "vars": {},
+                "assertions": [],
+                "tests": "",
+                "auth": {
+                  "mode": "none"
+                },
+                "query": []
+              }
+            },
+            {
+              "type": "http",
+              "name": "aula1-v4-put",
+              "seq": 3,
+              "request": {
+                "url": "http://localhost:3000/posts",
+                "method": "PUT",
+                "headers": [],
+                "body": {
+                  "mode": "json",
+                  "json": "{\"id\": 1, \"title\": \"Post 1 Updated\", \"content\": \"Content 1 Updated\"}",
+                  "formUrlEncoded": [],
+                  "multipartForm": []
+                },
+                "script": {},
+                "vars": {},
+                "assertions": [],
+                "tests": "",
+                "auth": {
+                  "mode": "none"
+                },
+                "query": []
+              }
+            },
+            {
+              "type": "http",
+              "name": "aula1-v4-delete",
+              "seq": 4,
+              "request": {
+                "url": "http://localhost:3000/posts",
+                "method": "DELETE",
+                "headers": [],
+                "body": {
+                  "mode": "json",
+                  "json": "{\"id\": 1}",
+                  "formUrlEncoded": [],
+                  "multipartForm": []
+                },
+                "script": {},
+                "vars": {},
+                "assertions": [],
+                "tests": "",
+                "auth": {
+                  "mode": "none"
+                },
+                "query": []
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "http",
+      "name": "aula1-v1-v2-not-found",
+      "seq": 2,
+      "request": {
+        "url": "http://localhost:3000/qwerty",
+        "method": "GET",
+        "headers": [],
+        "body": {
+          "mode": "none",
+          "formUrlEncoded": [],
+          "multipartForm": []
+        },
+        "script": {},
+        "vars": {},
+        "assertions": [],
+        "tests": "",
+        "auth": {
+          "mode": "none"
+        },
+        "query": []
+      }
+    },
+    {
+      "type": "http",
+      "name": "aula1-v1-v2-v3",
+      "seq": 1,
+      "request": {
+        "url": "http://localhost:3000/",
+        "method": "GET",
+        "headers": [],
+        "body": {
+          "mode": "none",
+          "formUrlEncoded": [],
+          "multipartForm": []
+        },
+        "script": {},
+        "vars": {},
+        "assertions": [],
+        "tests": "",
+        "auth": {
+          "mode": "none"
+        },
+        "query": []
+      }
+    }
+  ],
+  "environments": [],
+  "brunoConfig": {
+    "version": "1",
+    "name": "edit-BE-requests",
+    "type": "collection",
+    "ignore": [
+      "node_modules",
+      ".git"
+    ]
+  }
+}
