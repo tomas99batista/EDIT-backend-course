@@ -4,3 +4,4 @@
 - JWT
 - Bcrypt
 - Middleware de Autenticação
+- Criar uma API com Autenticação e JWT

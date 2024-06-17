@@ -4,8 +4,262 @@
   "items": [
     {
       "type": "folder",
+      "name": "aula2",
+      "items": [
+        {
+          "type": "http",
+          "name": "aula2-v1",
+          "seq": 1,
+          "request": {
+            "url": "http://localhost:3000/",
+            "method": "GET",
+            "headers": [],
+            "body": {
+              "mode": "none",
+              "formUrlEncoded": [],
+              "multipartForm": []
+            },
+            "script": {},
+            "vars": {},
+            "assertions": [],
+            "tests": "",
+            "auth": {
+              "mode": "none"
+            },
+            "query": []
+          }
+        },
+        {
+          "type": "http",
+          "name": "aula2-v3-bad",
+          "seq": 3,
+          "request": {
+            "url": "http://localhost:3000/user",
+            "method": "POST",
+            "headers": [],
+            "body": {
+              "mode": "json",
+              "json": "{\n  \"name\": 23,\n  \"age\": \"isto era suposto ser um numero\",\n  \"email\": \"wrongemail.com\"\n}",
+              "formUrlEncoded": [],
+              "multipartForm": []
+            },
+            "script": {},
+            "vars": {},
+            "assertions": [],
+            "tests": "",
+            "auth": {
+              "mode": "none"
+            },
+            "query": []
+          }
+        },
+        {
+          "type": "http",
+          "name": "aula2-v3",
+          "seq": 2,
+          "request": {
+            "url": "http://localhost:3000/user  console.log(\"here\");",
+            "method": "POST",
+            "headers": [],
+            "body": {
+              "mode": "json",
+              "json": "{\n  \"name\": \"Teste\",\n  \"age\": 24,\n  \"email\": \"teste@email.com\"\n}",
+              "formUrlEncoded": [],
+              "multipartForm": []
+            },
+            "script": {},
+            "vars": {},
+            "assertions": [],
+            "tests": "",
+            "auth": {
+              "mode": "none"
+            },
+            "query": []
+          }
+        },
+        {
+          "type": "folder",
+          "name": "v4",
+          "items": [
+            {
+              "type": "http",
+              "name": "aula2-v4-get",
+              "seq": 2,
+              "request": {
+                "url": "http://localhost:3000/posts",
+                "method": "GET",
+                "headers": [],
+                "body": {
+                  "mode": "json",
+                  "json": "{\n  \"name\": 23,\n  \"age\": \"isto era suposto ser um numero\",\n  \"email\": \"wrongemail.com\"\n}",
+                  "formUrlEncoded": [],
+                  "multipartForm": []
+                },
+                "script": {},
+                "vars": {},
+                "assertions": [],
+                "tests": "",
+                "auth": {
+                  "mode": "none"
+                },
+                "query": []
+              }
+            },
+            {
+              "type": "http",
+              "name": "aula2-v4",
+              "seq": 1,
+              "request": {
+                "url": "http://localhost:3000/posts",
+                "method": "POST",
+                "headers": [],
+                "body": {
+                  "mode": "json",
+                  "json": "{\n  \"title\": \"Post n1\",\n  \"content\": \"Este post fala sobre este curso maravilhoso de BE\",\n  \"date\": \"2024-01-04\",\n  \"tags\": [\"posts\", \"content\"]\n}",
+                  "formUrlEncoded": [],
+                  "multipartForm": []
+                },
+                "script": {},
+                "vars": {},
+                "assertions": [],
+                "tests": "",
+                "auth": {
+                  "mode": "none"
+                },
+                "query": []
+              }
+            }
+          ]
+        },
+        {
+          "type": "folder",
+          "name": "ex1",
+          "items": [
+            {
+              "type": "http",
+              "name": "get users",
+              "seq": 1,
+              "request": {
+                "url": "http://localhost:3000/user",
+                "method": "GET",
+                "headers": [],
+                "body": {
+                  "mode": "none",
+                  "formUrlEncoded": [],
+                  "multipartForm": []
+                },
+                "script": {},
+                "vars": {},
+                "assertions": [],
+                "tests": "",
+                "auth": {
+                  "mode": "none"
+                },
+                "query": []
+              }
+            },
+            {
+              "type": "http",
+              "name": "post user",
+              "seq": 2,
+              "request": {
+                "url": "http://localhost:3000/user",
+                "method": "POST",
+                "headers": [],
+                "body": {
+                  "mode": "json",
+                  "json": "{\n  \"name\": \"teste\",\n  \"email\": \"teste@email.com\"\n}",
+                  "formUrlEncoded": [],
+                  "multipartForm": []
+                },
+                "script": {},
+                "vars": {},
+                "assertions": [],
+                "tests": "",
+                "auth": {
+                  "mode": "none"
+                },
+                "query": []
+              }
+            },
+            {
+              "type": "http",
+              "name": "post user - wrong",
+              "seq": 3,
+              "request": {
+                "url": "http://localhost:3000/user",
+                "method": "POST",
+                "headers": [],
+                "body": {
+                  "mode": "json",
+                  "json": "{\n  \"name\": \"teste\",\n  \"email\": \"teste@email.com\"\n}",
+                  "formUrlEncoded": [],
+                  "multipartForm": []
+                },
+                "script": {},
+                "vars": {},
+                "assertions": [],
+                "tests": "",
+                "auth": {
+                  "mode": "none"
+                },
+                "query": []
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "folder",
       "name": "aula1",
       "items": [
+        {
+          "type": "http",
+          "name": "aula1-v1-v2-not-found",
+          "seq": 2,
+          "request": {
+            "url": "http://localhost:3000/qwerty",
+            "method": "GET",
+            "headers": [],
+            "body": {
+              "mode": "none",
+              "formUrlEncoded": [],
+              "multipartForm": []
+            },
+            "script": {},
+            "vars": {},
+            "assertions": [],
+            "tests": "",
+            "auth": {
+              "mode": "none"
+            },
+            "query": []
+          }
+        },
+        {
+          "type": "http",
+          "name": "aula1-v1-v2-v3",
+          "seq": 1,
+          "request": {
+            "url": "http://localhost:3000/",
+            "method": "GET",
+            "headers": [],
+            "body": {
+              "mode": "none",
+              "formUrlEncoded": [],
+              "multipartForm": []
+            },
+            "script": {},
+            "vars": {},
+            "assertions": [],
+            "tests": "",
+            "auth": {
+              "mode": "none"
+            },
+            "query": []
+          }
+        },
         {
           "type": "folder",
           "name": "v4",
@@ -68,183 +322,6 @@
                 "body": {
                   "mode": "json",
                   "json": "{\"title\": \"Post 3\", \"content\": \"Content 3\"}",
-                  "formUrlEncoded": [],
-                  "multipartForm": []
-                },
-                "script": {},
-                "vars": {},
-                "assertions": [],
-                "tests": "",
-                "auth": {
-                  "mode": "none"
-                },
-                "query": []
-              }
-            }
-          ]
-        },
-        {
-          "type": "http",
-          "name": "aula1-v1-v2-v3",
-          "seq": 1,
-          "request": {
-            "url": "http://localhost:3000/",
-            "method": "GET",
-            "headers": [],
-            "body": {
-              "mode": "none",
-              "formUrlEncoded": [],
-              "multipartForm": []
-            },
-            "script": {},
-            "vars": {},
-            "assertions": [],
-            "tests": "",
-            "auth": {
-              "mode": "none"
-            },
-            "query": []
-          }
-        },
-        {
-          "type": "http",
-          "name": "aula1-v1-v2-not-found",
-          "seq": 2,
-          "request": {
-            "url": "http://localhost:3000/qwerty",
-            "method": "GET",
-            "headers": [],
-            "body": {
-              "mode": "none",
-              "formUrlEncoded": [],
-              "multipartForm": []
-            },
-            "script": {},
-            "vars": {},
-            "assertions": [],
-            "tests": "",
-            "auth": {
-              "mode": "none"
-            },
-            "query": []
-          }
-        }
-      ]
-    },
-    {
-      "type": "folder",
-      "name": "aula2",
-      "items": [
-        {
-          "type": "http",
-          "name": "aula2-v1",
-          "seq": 1,
-          "request": {
-            "url": "http://localhost:3000/",
-            "method": "GET",
-            "headers": [],
-            "body": {
-              "mode": "none",
-              "formUrlEncoded": [],
-              "multipartForm": []
-            },
-            "script": {},
-            "vars": {},
-            "assertions": [],
-            "tests": "",
-            "auth": {
-              "mode": "none"
-            },
-            "query": []
-          }
-        },
-        {
-          "type": "http",
-          "name": "aula2-v3",
-          "seq": 2,
-          "request": {
-            "url": "http://localhost:3000/user  console.log(\"here\");",
-            "method": "POST",
-            "headers": [],
-            "body": {
-              "mode": "json",
-              "json": "{\n  \"name\": \"Teste\",\n  \"age\": 24,\n  \"email\": \"teste@email.com\"\n}",
-              "formUrlEncoded": [],
-              "multipartForm": []
-            },
-            "script": {},
-            "vars": {},
-            "assertions": [],
-            "tests": "",
-            "auth": {
-              "mode": "none"
-            },
-            "query": []
-          }
-        },
-        {
-          "type": "http",
-          "name": "aula2-v3-bad",
-          "seq": 3,
-          "request": {
-            "url": "http://localhost:3000/user",
-            "method": "POST",
-            "headers": [],
-            "body": {
-              "mode": "json",
-              "json": "{\n  \"name\": 23,\n  \"age\": \"isto era suposto ser um numero\",\n  \"email\": \"wrongemail.com\"\n}",
-              "formUrlEncoded": [],
-              "multipartForm": []
-            },
-            "script": {},
-            "vars": {},
-            "assertions": [],
-            "tests": "",
-            "auth": {
-              "mode": "none"
-            },
-            "query": []
-          }
-        },
-        {
-          "type": "folder",
-          "name": "v4",
-          "items": [
-            {
-              "type": "http",
-              "name": "aula2-v4",
-              "seq": 1,
-              "request": {
-                "url": "http://localhost:3000/posts",
-                "method": "POST",
-                "headers": [],
-                "body": {
-                  "mode": "json",
-                  "json": "{\n  \"title\": \"Post n1\",\n  \"content\": \"Este post fala sobre este curso maravilhoso de BE\",\n  \"date\": \"2024-01-04\",\n  \"tags\": [\"posts\", \"content\"]\n}",
-                  "formUrlEncoded": [],
-                  "multipartForm": []
-                },
-                "script": {},
-                "vars": {},
-                "assertions": [],
-                "tests": "",
-                "auth": {
-                  "mode": "none"
-                },
-                "query": []
-              }
-            },
-            {
-              "type": "http",
-              "name": "aula2-v4-get",
-              "seq": 2,
-              "request": {
-                "url": "http://localhost:3000/posts",
-                "method": "GET",
-                "headers": [],
-                "body": {
-                  "mode": "json",
-                  "json": "{\n  \"name\": 23,\n  \"age\": \"isto era suposto ser um numero\",\n  \"email\": \"wrongemail.com\"\n}",
                   "formUrlEncoded": [],
                   "multipartForm": []
                 },

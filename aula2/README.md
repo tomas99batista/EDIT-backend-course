@@ -32,10 +32,11 @@ app.listen(3000, () => {
 
 - O middleware é chamado antes da função que responde a request, então o log será exibido antes de "Hello World!".
 
-- TODO: req é
+- req é o request, é o objeto que contém as informações da request, como o método HTTP, a URL, o body, os headers, etc.
 
-- TODO: res é
-  -- É possível com o res fazer
+- res é a response, é o objeto que contém as funções para responder a request, como `send`, `json`, `status`, etc.
+  -- É possível com o res fazer um redirect, por exemplo, com `res.redirect('/');`.
+  -- É possível também enviar um status, por exemplo, com `res.status(404).send('Not Found');`, nem precisando de entrar na API com o `next()`.
 
 - O `next()` é utilizado para chamar a próxima função, se não for chamado a request não será passada para a próxima função.
 
@@ -248,4 +249,120 @@ module.exports = {
 
 ## Exercício
 
-TODO: - Criar uma API com Validação de Input no Middleware Estrutura e Organização
+- Criar uma API com Validação de Input no Middleware Estrutura e Organização
+
+- EXEMPLO: Criar uma API com uma rota POST `/user` que recebe um objeto com os campos `name`, `age` e `email`.
+  -- Podem usar outro tema, tais como `Posts`, `Products`, `Orders`, etc.
+
+- Criar um GET `/user` que retorna um array de users.
+
+- Validar o objeto com Joi no middleware.
+
+- Se o objeto for válido, retornar um status 201 e um objeto com a mensagem `User created`.
+
+- Se o objeto não for válido, retornar um status 400 e um objeto com a mensagem de erro.
+
+- Organizar a API por camadas: Controller, Service e Repository.
+
+- Utilizar o router do express para organizar as rotas por files.
+
+- Criar um file para cada camada: `controllers/userController.js`, `services/userService.js` e `repositories/userRepository.js`.
+
+- O arquivo `repositories/userRepository.js` deve ter um array de users e as funções `getAll` e `create`.
+
+- O arquivo `services/userService.js` deve chamar o `userRepository` e ter as funções `getAll` e `create`.
+
+- O arquivo `controllers/userController.js` deve chamar o `userService` e ter a rota POST `/user` com a validação de input.
+
+- Testar a API com o Bruno.
+
+```javascript
+// index.js
+const express = require("express");
+const app = express();
+
+const users = require("./controllers/userController.js");
+
+app.use(express.json());
+app.use(users); // Utiliza o router de users
+
+app.listen(3000, () => {
+  console.log("server is running (express)");
+});
+
+// Middleware
+const Joi = require("joi");
+
+const userSchema = Joi.object({
+  name: Joi.string().required(),
+  age: Joi.number().required(),
+  email: Joi.string().email().required(),
+});
+
+const validateUser = (req, res, next) => {
+  const {error} = userSchema.validate(req.body);
+  if (error) {
+    return res.status(400).json(error.details);
+  }
+  next();
+};
+
+module.exports = validateUser;
+
+// Controller
+const express = require("express");
+const router = express.Router();
+const userService = require("../services/userService");
+const validateUser = require("../middlewares/userMiddleware");
+
+router.post("/user", validateUser, (req, res) => {
+  const created = userService.create(req.body);
+  res.status(201).json(created);
+});
+
+router.get("/user", (req, res) => {
+  const users = userService.getAll();
+  res.status(200).json(users);
+});
+
+module.exports = router;
+
+// Service
+const userRepository = require("../repositories/userRepository");
+
+const getAll = () => {
+  return userRepository.getAll();
+};
+
+const create = (user) => {
+  return userRepository.create(user);
+};
+
+module.exports = {
+  getAll,
+  create,
+};
+
+// Repository
+const users = [
+  {
+    name: "John Doe",
+    age: 30,
+    email: "john@email.com",
+  },
+];
+
+const getAll = () => {
+  return users;
+};
+
+const create = (user) => {
+  users.push(user);
+  return user;
+};
+
+module.exports = {
+  getAll,
+  create,
+};
+```
