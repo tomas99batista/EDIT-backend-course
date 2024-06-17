@@ -1,0 +1,20 @@
+meta {
+  name: aula2-v4
+  type: http
+  seq: 1
+}
+
+post {
+  url: http://localhost:3000/posts
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "title": "Post n1",
+    "content": "Este post fala sobre este curso maravilhoso de BE",
+    "date": "2024-01-04",
+    "tags": ["posts", "content"]
+  }
+}

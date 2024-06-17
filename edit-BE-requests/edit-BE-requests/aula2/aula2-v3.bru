@@ -1,0 +1,19 @@
+meta {
+  name: aula2-v3
+  type: http
+  seq: 2
+}
+
+post {
+  url: http://localhost:3000/user  console.log("here");
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "name": "Teste",
+    "age": 24,
+    "email": "teste@email.com"
+  }
+}

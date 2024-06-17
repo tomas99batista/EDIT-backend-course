@@ -22,9 +22,7 @@ https://weareedit.io/
 - Estrutura e Organização
   -- Organização por camadas
   -- Camadas: Controller, Service, Repository
-- Criar uma API com Middleware
-- Criar uma API com Validação de Input
-- Criar uma API com Estrutura e Organização
+- Criar uma API com Validação de Input no Middleware Estrutura e Organização
 
 # Tópico 3 - Parâmetros e Variáveis de Ambiente
 

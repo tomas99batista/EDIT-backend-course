@@ -1,0 +1,19 @@
+meta {
+  name: aula2-v3-bad
+  type: http
+  seq: 3
+}
+
+post {
+  url: http://localhost:3000/user
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "name": 23,
+    "age": "isto era suposto ser um numero",
+    "email": "wrongemail.com"
+  }
+}

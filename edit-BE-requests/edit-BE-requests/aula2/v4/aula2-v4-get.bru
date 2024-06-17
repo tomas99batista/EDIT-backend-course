@@ -1,0 +1,19 @@
+meta {
+  name: aula2-v4-get
+  type: http
+  seq: 2
+}
+
+get {
+  url: http://localhost:3000/posts
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "name": 23,
+    "age": "isto era suposto ser um numero",
+    "email": "wrongemail.com"
+  }
+}
