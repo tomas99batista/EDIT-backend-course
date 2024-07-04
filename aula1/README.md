@@ -41,6 +41,7 @@ npm init -y
 - Exemplo de uma API simples criada com http:
 
 ```javascript
+// aula1/v1/index.js
 const http = require("http"); // Importa o módulo http
 
 // Cria um servidor http
@@ -59,7 +60,7 @@ const server = http.createServer(function (req, res) {
 
 // O servidor irá escutar na porta 3000
 server.listen(3000, function () {
-  console.log("Server running on port 3000"); // Esta mensagem será exibida no console quando o servidor estiver rodando
+  console.log("Server running on port 3000"); // Esta mensagem será exibida no console quando o servidor estiver live
 });
 ```
 
@@ -69,7 +70,7 @@ server.listen(3000, function () {
 
 ```bash
 npm init -y
-npm install nodemon
+npm install --save-dev nodemon
 npm install express
 ```
 
@@ -102,6 +103,7 @@ Nodemon é uma ferramenta que reinicia o servidor automaticamente sempre que um 
 - Exemplo de uma API simples criada com express:
 
 ```javascript
+// aula1/v2/index.js
 const express = require("express"); // Importa o módulo express
 
 const app = express(); // Cria uma instância do express - necessário para criar uma aplicação express
@@ -116,6 +118,8 @@ app.listen(3000, () => {
   console.log("Server running on port 3000"); // Esta mensagem será exibida no console quando o servidor estiver rodando
 });
 ```
+
+- Express é um framework para Node.js que facilita a criação de APIs e aplicações web.
 
 ### JSON
 
@@ -138,6 +142,7 @@ app.listen(3000, () => {
 - Exemplo de uma API simples criada com express que retorna um objeto JSON:
 
 ```javascript
+// aula1/v3/index.js
 const express = require("express");
 
 const app = express();
@@ -161,10 +166,10 @@ app.listen(3000, () => {
 
 - API deve ter um endpoint que retorna todos os posts
 - API deve ter um endpoint que cria um novo post
-- API deve ter um endpoint que atualiza um post
 - API deve ter um endpoint que deleta um post
 
   ```javascript
+  // aula1/v4/index.js
   const express = require("express");
   const app = express();
 
@@ -204,5 +209,3 @@ app.listen(3000, () => {
   ```
 
 - Apenas noções básicas de APIs e Express foram abordadas nesta aula. Na próxima aula iremos aprofundar mais em Express e também abordar Middlewares, Validação de Input e Estrutura.
-
-- Não abordamos nenhum PUT mas iremos abordar na próxima aula.

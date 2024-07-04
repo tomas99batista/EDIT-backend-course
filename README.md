@@ -53,20 +53,7 @@ https://weareedit.io/
 - Middleware de Autenticação
 - Criar uma API com Autenticação e JWT
 
-# OPTIONAL: Tópico 6 - Deploy
-
-- Heroku
-- MongoDB Atlas
-- Deploy da API
-
-# OPTIONAL: Tópico 7 - Testes
-
-- Testes Unitários
-- Supertest
-- Jest
-- Criar testes unitários
-
-# OPTIONAL: Tópico 10 - Apoio Projeto Final
+# OPTIONAL: Tópico 6 - Apoio Projeto Final
 
 - Criação de uma API de gestão de produtos que permita:
   - Adicionar um produto
