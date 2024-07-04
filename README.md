@@ -14,7 +14,15 @@ https://weareedit.io/
 - JSON
 - Criar uma API simples com express e JSON
 
-# Tópico 2 - Middleware, Validação de Input e Estrutura
+# Tópico 2 - Parâmetros e Variáveis de Ambiente
+
+- Environment Variables
+  -- dotenv
+- Path Parameters
+- Query String
+- Criar uma API com Environment Variables, Path Parameters e Query String
+
+# Tópico 3 - Middleware, Validação de Input e Estrutura
 
 - Middleware
 - Validação de Input
@@ -23,14 +31,6 @@ https://weareedit.io/
   -- Organização por camadas
   -- Camadas: Controller, Service, Repository
 - Criar uma API com Validação de Input no Middleware Estrutura e Organização
-
-# Tópico 3 - Parâmetros e Variáveis de Ambiente
-
-- Environment Variables
-  -- dotenv
-- Path Parameters
-- Query String
-- Criar uma API com Environment Variables, Path Parameters e Query String
 
 # Tópico 4 - Bases de Dados e Mongoose
 

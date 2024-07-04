@@ -1,135 +1,368 @@
-# Tópico 3 - Variáveis de Ambiente e Parâmetros da API
+# Tópico 3 - Middleware, Validação de Input e Estrutura
 
-- Environment Variables
-  -- dotenv
-- Path Parameters
-- Query String
-- Criar uma API com Environment Variables, Path Parameters e Query String
+## O que é um Middleware?
 
-# Environment Variables
+- Middleware é uma função que recebe os objetos `request` e `response` e pode realizar operações antes de passar o request para a próxima função.
 
-- Environment Variables são variáveis de ambiente que podem ser acedidas por qualquer processo em execução no sistema operacional.
+- Um middleware pode ser utilizado para realizar operações como validação de input, autenticação, log, etc.
 
-- Estas variáveis são usadas para passar informação ao programa que queremos parametrizar/configurar.
+- Um middleware pode ser utilizado em uma rota específica ou em todas as rotas.
 
-- Podemos definir, por exemplo, variáveis de ambiente para configurar a nossa aplicação, como a porta onde a aplicação vai correr, a URL da base de dados, passwords de acesso, etc.
-
-- No Node.js, podemos aceder às variáveis de ambiente através do objeto `process.env`.
-
-- Para definir variáveis de ambiente, podemos fazê-lo diretamente no terminal, antes de correr a aplicação, ou podemos definir variáveis de ambiente num ficheiro `.env`.
-
-- Tendo o seguinte num ficheiro "vars.js":
+- Exemplo de middleware que loga o método HTTP e a URL da request:
 
 ```javascript
-console.log(process.env.FOO);
+const express = require("express");
+const app = express();
+
+app.use((req, res, next) => {
+  console.log("Inside middleware");
+  console.log(`${req.method} ${req.url}`);
+  next(); // Chama a próxima função
+});
+
+app.get("/", (req, res) => {
+  console.log("After middleware");
+  res.send("Hello World!");
+});
+
+app.listen(3000, () => {
+  console.log("Server running on port 3000");
+});
 ```
 
-- Testando no terminal:
+- O middleware é chamado antes da função que responde a request, então o log será exibido antes de "Hello World!".
+
+- req é o request, é o objeto que contém as informações da request, como o método HTTP, a URL, o body, os headers, etc.
+
+- res é a response, é o objeto que contém as funções para responder a request, como `send`, `json`, `status`, etc.
+  -- É possível com o res fazer um redirect, por exemplo, com `res.redirect('/');`.
+  -- É possível também enviar um status, por exemplo, com `res.status(404).send('Not Found');`, nem precisando de entrar na API com o `next()`.
+
+- O `next()` é utilizado para chamar a próxima função, se não for chamado a request não será passada para a próxima função.
+
+## Validação de Input
+
+- Validação de input é uma prática comum em APIs para garantir que os dados recebidos são válidos.
+
+- Uma biblioteca comum para validação de input é o Joi. Existem outras bibliotecas como o Yup e Zod.
+
+- A validação de input pode ser feita em um middleware ou em uma função específica.
+
+- Serve para garantir que os dados recebidos são válidos e seguros. Por exemplo, garantir que um email é um email válido ou que um número é um número, etc.
+
+- Exemplo de validação de input com Joi:
 
 ```bash
-FOO=bar node vars.js
+npm install joi
 ```
-
-- Para definir variáveis de ambiente num ficheiro `.env`, podemos usar o pacote `dotenv`.
-
-# dotenv
-
-- O pacote `dotenv` permite carregar variáveis de ambiente a partir de um ficheiro `.env`.
-
-- Para usar o pacote `dotenv`, primeiro temos de instalar o pacote:
-
-```bash
-npm install dotenv
-```
-
-- Depois, podemos carregar as variáveis de ambiente a partir do ficheiro `.env`:
 
 ```javascript
-require("dotenv").config();
+const Joi = require("joi");
+
+const schema = Joi.object({
+  name: Joi.string().required(),
+  age: Joi.number().required(),
+  email: Joi.string().email().required(),
+});
+
+const data = {
+  name: "John Doe",
+  age: 30,
+  email: "john@email.com",
+};
+
+const result = schema.validate(data);
+
+if (result.error) {
+  console.error(result.error.message);
+} else {
+  console.log("Data is valid");
+}
+
+const badData = {
+  name: "John Doe",
+  age: "30",
+  email: "johnemail.com",
+};
+
+const badResult = schema.validate(badData);
+
+if (badResult.error) {
+  console.error(badResult.error.message);
+} else {
+  console.log("Data is valid");
+}
 ```
 
-- O ficheiro `.env` deve estar na raiz do projeto e deve conter as variáveis de ambiente no formato `NOME_VARIAVEL=VALOR`.
+- No exemplo acima estamos a validar um objeto, mas é possível validar um request body de uma API.
 
-- Por exemplo:
-
-```
-PORT=3000
-PASSWORD_SECRET=123456
-```
-
-- Depois de carregar as variáveis de ambiente, podemos aceder às variáveis de ambiente através do objeto `process.env`.
-
-- Por exemplo:
+- Exemplo de validação de input numa API:
 
 ```javascript
-const port = process.env.PORT;
-const passwordSecret = process.env.PASSWORD_SECRET;
+const express = require("express");
+const app = express();
+const Joi = require("joi");
 
-console.log("port", port);
-console.log("password:", passwordSecret);
-```
+app.use(express.json());
 
-# Path Parameters
+const schema = Joi.object({
+  name: Joi.string().required(),
+  age: Joi.number().required(),
+  email: Joi.string().email().required(),
+});
 
-- Path Parameters são parâmetros que fazem parte do URL.
+app.post("/user", (req, res) => {
+  const result = schema.validate(req.body); // TODO: passar isto para o middleware
 
-- Por exemplo, no URL `http://localhost:3000/users/123`, o `123` é um path parameter.
+  if (result.error) {
+    res.status(400).json({error: result.error.message});
+  } else {
+    res.json({message: "User created"});
+  }
+});
 
-- Para aceder a path parameters no Express, podemos usar `req.params`
-
-- Por exemplo:
-
-```javascript
-app.get("/users/:id", (req, res) => {
-  const id = req.params.id;
-  res.send(`User ID: ${id}`);
+app.listen(3000, () => {
+  console.log("Server running on port 3000");
 });
 ```
 
-- No exemplo acima, o valor de `id` é extraído do URL e disponibilizado no objeto `req.params`.
+- No exemplo acima estamos a validar o body de um request POST para a rota `/user`.
 
-- Podemos ter vários path parameters no URL:
+## Estrutura e Organização
 
-```javascript
-app.get("/users/:userId/books/:bookId", (req, res) => {
-  console.log(req.params.userId);
-  console.log(req.params.bookId);
-  // ...
-});
-```
+- Organização por camadas é uma prática comum em APIs para separar as responsabilidades.
 
-# Query String
+- As camadas mais comuns são: Controller, Service e Repository.
 
-- A Query String é uma parte opcional de um URL, composta por pares chave-valor: `https://example.com/field1=value1&field2=value2&field3=value3`.
+- Controller é responsável por receber o request, chamar o Service e enviar a response.
 
-- Estes valores podem ser usados para qualquer finalidade mas no contexto de uma API REST, são normalmente informação adicional a passar a um GET, por exemplo para filtrar ou paginar a resposta.
+- Service é responsável por realizar a lógica de negócio da aplicação. Também pode chamar o Repository. Algumas operações do Service são: criar, atualizar, deletar, etc.
 
-- Por exemplo:
+- Repository é responsável por realizar operações na base de dados.
 
-```
-GET /products - retorna todos os produtos
-GET /products?category=music - retorna todos os produtos, filtrados pela categoria music
-```
+- Podemos usar o router do express para organizar as rotas por files.
 
-- O Express trata de reconhecer a query string e disponibilizar todos os pares no objeto `req.query`. No exemplo acima, poderiamos aceder à categoria através de `req.query.category`.
-
-- Exemplo:
+- Exemplo de organização por camadas:
 
 ```javascript
-app.get("/products", (req, res) => {
-  const category = req.query.category;
-  res.send(`Category: ${category}`);
+// index.js
+const express = require("express");
+const app = express();
+
+const posts = require("./controllers/postsController");
+
+app.use(express.json());
+app.use(posts); // Utiliza o router de posts
+
+app.listen(3000, () => {
+  console.log("server is running (express)");
 });
+
+// Controller
+const express = require("express");
+const router = express.Router();
+const Joi = require("joi");
+const postsService = require("../services/postsService");
+
+router.get("/posts", (req, res) => {
+  const posts = postsService.getAll();
+  res.status(200).json(posts);
+});
+
+// post schema
+const postSchema = Joi.object({
+  title: Joi.string().min(5).required(),
+  content: Joi.string().min(10).required(),
+  date: Joi.date(),
+  tags: Joi.array().items(Joi.string()),
+});
+
+router.post("/posts", (req, res) => {
+  const {error, value} = postSchema.validate(req.body);
+  if (error) {
+    return res.status(400).json(error.details);
+  }
+
+  const created = postsService.create(value);
+
+  res.status(201).json(created);
+});
+
+module.exports = router;
+
+// Service
+const postsRepository = require("../repositories/postsRepository");
+
+const getAll = () => {
+  return postsRepository.getAll();
+};
+
+const create = (post) => {
+  return postsRepository.create(post);
+};
+
+module.exports = {
+  getAll,
+  create,
+};
+
+// Repository
+const posts = [
+  {
+    id: 1,
+    title: "Post 1",
+    content: "Content 1",
+    date: "2024-01-01",
+    tags: ["post1"],
+  },
+  {
+    id: 2,
+    title: "Post 2",
+    content: "Content 2",
+    date: "2024-02-02",
+    tags: ["post2"],
+  },
+];
+
+const getAll = () => {
+  return posts;
+};
+
+const create = (post) => {
+  posts.push(post);
+  return post;
+};
+
+module.exports = {
+  getAll,
+  create,
+};
 ```
 
-# Criar uma API com Environment Variables, Path Parameters e Query String
+- No exemplo acima temos um Controller que chama um Service que chama um Repository.
 
-- Vamos criar uma API que usa variáveis de ambiente, path parameters e query string.
+- A organização por camadas facilita a manutenção e a escalabilidade da aplicação.
 
-- O objetivo é criar uma API que retorna um array de produtos.
+- Podemos criar files separados para cada camada, por exemplo `controllers/postsController.js`, `services/postsService.js` e `repositories/postsRepository.js`.
 
-- Cada produto tem um ID, um nome e uma categoria.
+- Se tivessemos, por exemplo, outra entidade `User`, poderíamos criar os files `controllers/userController.js`, `services/userService.js` e `repositories/userRepository.js`.
 
-- A API deve permitir filtrar os produtos por categoria.
+## Exercício
 
-- O ficheiro `.env` deve conter a variável `PORT` com o valor da porta onde a aplicação vai correr.
+- Criar uma API com Validação de Input no Middleware Estrutura e Organização
+
+- EXEMPLO: Criar uma API com uma rota POST `/user` que recebe um objeto com os campos `name`, `age` e `email`.
+  -- Podem usar outro tema, tais como `Posts`, `Products`, `Orders`, etc.
+
+- Criar um GET `/user` que retorna um array de users.
+
+- Validar o objeto com Joi no middleware.
+
+- Se o objeto for válido, retornar um status 201 e um objeto com a mensagem `User created`.
+
+- Se o objeto não for válido, retornar um status 400 e um objeto com a mensagem de erro.
+
+- Organizar a API por camadas: Controller, Service e Repository.
+
+- Utilizar o router do express para organizar as rotas por files.
+
+- Criar um file para cada camada: `controllers/userController.js`, `services/userService.js` e `repositories/userRepository.js`.
+
+- O arquivo `repositories/userRepository.js` deve ter um array de users e as funções `getAll` e `create`.
+
+- O arquivo `services/userService.js` deve chamar o `userRepository` e ter as funções `getAll` e `create`.
+
+- O arquivo `controllers/userController.js` deve chamar o `userService` e ter a rota POST `/user` com a validação de input.
+
+- Testar a API com o Bruno.
+
+```javascript
+// index.js
+const express = require("express");
+const app = express();
+
+const users = require("./controllers/userController.js");
+
+app.use(express.json());
+app.use(users); // Utiliza o router de users
+
+app.listen(3000, () => {
+  console.log("server is running (express)");
+});
+
+// Middleware
+const Joi = require("joi");
+
+const userSchema = Joi.object({
+  name: Joi.string().required(),
+  age: Joi.number().required(),
+  email: Joi.string().email().required(),
+});
+
+const validateUser = (req, res, next) => {
+  const {error} = userSchema.validate(req.body);
+  if (error) {
+    return res.status(400).json(error.details);
+  }
+  next();
+};
+
+module.exports = validateUser;
+
+// Controller
+const express = require("express");
+const router = express.Router();
+const userService = require("../services/userService");
+const validateUser = require("../middlewares/userMiddleware");
+
+router.post("/user", validateUser, (req, res) => {
+  const created = userService.create(req.body);
+  res.status(201).json(created);
+});
+
+router.get("/user", (req, res) => {
+  const users = userService.getAll();
+  res.status(200).json(users);
+});
+
+module.exports = router;
+
+// Service
+const userRepository = require("../repositories/userRepository");
+
+const getAll = () => {
+  return userRepository.getAll();
+};
+
+const create = (user) => {
+  return userRepository.create(user);
+};
+
+module.exports = {
+  getAll,
+  create,
+};
+
+// Repository
+const users = [
+  {
+    name: "John Doe",
+    age: 30,
+    email: "john@email.com",
+  },
+];
+
+const getAll = () => {
+  return users;
+};
+
+const create = (user) => {
+  users.push(user);
+  return user;
+};
+
+module.exports = {
+  getAll,
+  create,
+};
+```
