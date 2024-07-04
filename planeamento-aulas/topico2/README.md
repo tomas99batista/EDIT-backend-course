@@ -28,7 +28,7 @@ console.log(process.env.CURSO);
 - Testando no terminal:
 
 ```bash
-PORT=3000 CURSO=FSWD node vars.js
+env PORT=3000 CURSO=FSWD node vars.js
 ```
 
 - Também podemos por estas variáveis no script do package.json, que é mais ou menos a mesma coisa.
@@ -84,9 +84,10 @@ console.log("password:", passwordSecret);
 - Por exemplo:
 
 ```javascript
-app.get("/users/:id", (req, res) => {
+app.get("/posts/:id", (req, res) => {
   const id = req.params.id;
-  res.send(`User ID: ${id}`);
+  console.log("Post id: ", id);
+  res.send({id: id});
 });
 ```
 
@@ -95,10 +96,11 @@ app.get("/users/:id", (req, res) => {
 - Podemos ter vários path parameters no URL:
 
 ```javascript
-app.get("/users/:userId/books/:bookId", (req, res) => {
-  console.log(req.params.userId);
-  console.log(req.params.bookId);
-  // ...
+app.get("/users/:userId/posts/:postId", (req, res) => {
+  const userId = req.params.userId;
+  const postId = req.params.postId;
+  console.log("User id: ", userId, "Post id: ", postId);
+  res.send({userId: userId, postId: postId});
 });
 ```
 
@@ -120,9 +122,18 @@ GET /products?category=music - retorna todos os produtos, filtrados pela categor
 - Exemplo:
 
 ```javascript
-app.get("/products", (req, res) => {
+app.get("/posts", (req, res) => {
   const category = req.query.category;
-  res.send(`Category: ${category}`);
+  res.send({category: category});
+});
+```
+
+- Também podemos, tal como nos url params ter vários query params (separados por &)
+
+```javascript
+app.get("/posts", (req, res) => {
+  const queryParams = req.query;
+  res.send(queryParams);
 });
 ```
 

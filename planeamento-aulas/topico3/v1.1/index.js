@@ -8,11 +8,10 @@ app.use((req, res, next) => {
 });
 
 const namedMiddleware = (req, res, next) => {
-  console.log("Aqui só entra quando especificado");
+  console.log("Aqui só entra quando declarado");
   next(); // Chama a próxima função
 };
 
-// Especificado aqui:
 app.get("/", namedMiddleware, (req, res) => {
   console.log("After middleware");
   res.send("Hello World!");

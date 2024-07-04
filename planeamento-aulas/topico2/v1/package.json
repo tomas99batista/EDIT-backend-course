@@ -5,8 +5,8 @@
   "type": "module",
   "main": "index.js",
   "scripts": {
-    "start": "PORT=3000 CURSO=FSWD node index.js",
-    "dev": "PORT=3000 CURSO=FSWD nodemon index.js"
+    "start": "env PORT=3000 CURSO=FSWD node index.js",
+    "dev": "env PORT=3000 CURSO=FSWD nodemon index.js"
   },
   "keywords": [],
   "author": "",

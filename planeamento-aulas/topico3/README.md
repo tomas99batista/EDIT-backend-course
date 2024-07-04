@@ -40,6 +40,31 @@ app.listen(3000, () => {
 
 - O `next()` é utilizado para chamar a próxima função, se não for chamado a request não será passada para a próxima função.
 
+- O middleware acima corre em todos os app.METHOD, se nao queremos isto temos de fazer VVV
+
+- Named middleware - para usarmos apenas nos endpoints onde queremos especificar
+
+```javascript
+const namedMiddleware = (req, res, next) => {
+  console.log("Aqui só entra quando especificado");
+  next(); // Chama a próxima função
+};
+
+// app.get("path", middleware, (req, res) => {});
+app.get("/", namedMiddleware, (req, res) => {
+  console.log("After middleware");
+  res.send("Hello World!");
+});
+```
+
+- Podemos ter montes de middlewares`- um valida o user, outro valida o pedido, outro imprime outra coisa, etc
+
+```javascript
+app.get("path", middleware1, middleware2, middleware3, (req, res) => {});
+```
+
+TODO: passar coisas do middleware para o endpoint:
+
 ## Validação de Input
 
 - Validação de input é uma prática comum em APIs para garantir que os dados recebidos são válidos.
