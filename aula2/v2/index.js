@@ -1,7 +1,9 @@
-require("dotenv").config();
+import dotenv from "dotenv";
+
+dotenv.config();
 
 const port = process.env.PORT;
 const passwordSecret = process.env.PASSWORD_SECRET;
 
-console.log("port", port);
-console.log("password:", passwordSecret);
+console.log("Port:", port);
+console.log("Password:", passwordSecret);

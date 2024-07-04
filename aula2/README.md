@@ -21,18 +21,21 @@
 - Tendo o seguinte num ficheiro "vars.js":
 
 ```javascript
-console.log(process.env.FOO);
+console.log(process.env.PORT);
+console.log(process.env.CURSO);
 ```
 
 - Testando no terminal:
 
 ```bash
-FOO=bar node vars.js
+PORT=3000 CURSO=FSWD node vars.js
 ```
 
-- Para definir variáveis de ambiente num ficheiro `.env`, podemos usar o pacote `dotenv`.
+- Também podemos por estas variáveis no script do package.json, que é mais ou menos a mesma coisa.
 
 # dotenv
+
+- Para definir variáveis de ambiente num ficheiro `.env`, podemos usar o pacote `dotenv`.
 
 - O pacote `dotenv` permite carregar variáveis de ambiente a partir de um ficheiro `.env`.
 
@@ -45,7 +48,8 @@ npm install dotenv
 - Depois, podemos carregar as variáveis de ambiente a partir do ficheiro `.env`:
 
 ```javascript
-require("dotenv").config();
+import dotenv from "dotenv";
+dotenv.config();
 ```
 
 - O ficheiro `.env` deve estar na raiz do projeto e deve conter as variáveis de ambiente no formato `NOME_VARIAVEL=VALOR`.
@@ -57,7 +61,7 @@ PORT=3000
 PASSWORD_SECRET=123456
 ```
 
-- Depois de carregar as variáveis de ambiente, podemos aceder às variáveis de ambiente através do objeto `process.env`.
+- Depois de carregar as variáveis de ambiente, podemos aceder às variáveis de ambiente através do objeto `process.env.NOME_VARIAVEL`.
 
 - Por exemplo:
 
