@@ -1,0 +1,15 @@
+meta {
+  name: path-param-v1
+  type: http
+  seq: 1
+}
+
+get {
+  url: http://localhost:3000/active-produtos?available=true
+  body: none
+  auth: none
+}
+
+query {
+  available: true
+}

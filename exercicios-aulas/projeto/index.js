@@ -1,4 +1,8 @@
 import express from "express";
+import dotenv from "dotenv";
+
+dotenv.config();
+const PORT = process.env.PORT;
 
 // Cria uma instancia do express
 const app = express();
@@ -14,7 +18,7 @@ app.use(express.json());
 // }
 
 // Onde guardamos os nossos produtos (os iniciais + os que adicionamos)
-const produtosLista = [
+let produtosLista = [
   {
     id: 1,
     name: "H&S",
@@ -48,14 +52,35 @@ app.post("/produtos", (req, res) => {
   res.send(produtosLista);
 });
 
-// Rota DELETE para /produtos que recebe um id e deleta o produto com esse id
-// BODY: {id: 1}
-// Dica: filtrem a produtosLista para remover o id quer receberem
+// Rota DELETE para /produtos/:id que recebe um id e deleta o produto com esse id
+app.delete("/produtos/:id", (req, res) => {
+  const id = req.params.id;
+  produtosLista = produtosLista.filter((produto) => {
+    // Aqui temos de fazer comparaçao loose porque o id quando vem dos req.params vem como uma string,
+    // por exemplo se passarmos /produtos/1 ele chega como "1", em string
+    // Podemos fazer um cast para inteiro
+    // TODO: iremos resolver isto na prox aula com validação de input e etc
+    return produto.id != id;
+  });
+  res.send(produtosLista);
+});
 
-// TODO: topico 2: transformar este {id: 1} para um url param
-// TODO: topico 2: criar um get por ?isAvailable=true que retorna todos os produtos cujo available=true
+// URL query
+// GET /active-produtos?isAvailable=boolean -> ia a lista dos produtos e faziam filter pelos activos
+// TODO: este endpoint pode chamar-se /produtos e ser integrado com o primeiro get - verificamos se ha req.query.available
+// Se sim filtramos, se nao mandamos de volta a lista toda
+app.get("/active-produtos", (req, res) => {
+  const isAvailable = req.query.available;
+  // Como nao temos validaçao de input, ao ler req.query.available recebemos uma string, ou seja "true"
+  // para obtermos um boolean podemos comparar o isAvailable com "true", se forem iguais dá true, se for diferente dá false
+  // TODO: iremos resolver isto na prox aula com validação de input e etc
+  const isTrue = isAvailable === "true";
+  const filteredProdutos = produtosLista.filter((produto) => {
+    return produto.available === isTrue;
+  });
+  res.send(filteredProdutos);
+});
 
-// TODO: topico 2: transformar esta port para uma .env
-app.listen(3000, () => {
-  console.log("servidor na porta 3000");
+app.listen(PORT, () => {
+  console.log("servidor na porta", PORT);
 });
