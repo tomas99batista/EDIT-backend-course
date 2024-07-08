@@ -2,6 +2,7 @@
   "name": "aula2-v1",
   "version": "1.0.0",
   "description": "",
+  "type": "module",
   "main": "index.js",
   "scripts": {
     "start": "env PORT=3000 node index.js",

@@ -20,11 +20,12 @@ const getAll = () => {
 };
 
 const create = (post) => {
+  post.id = posts.length + 1;
   posts.push(post);
   return post;
 };
 
-module.exports = {
+export default {
   getAll,
   create,
 };

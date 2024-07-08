@@ -1,8 +1,6 @@
 import express from "express";
 import dotenv from "dotenv";
-
 dotenv.config();
-const PORT = process.env.PORT;
 
 // Cria uma instancia do express
 const app = express();
@@ -74,6 +72,7 @@ app.get("/active-produtos", (req, res) => {
   // Como nao temos validaçao de input, ao ler req.query.available recebemos uma string, ou seja "true"
   // para obtermos um boolean podemos comparar o isAvailable com "true", se forem iguais dá true, se for diferente dá false
   // TODO: iremos resolver isto na prox aula com validação de input e etc
+  // TODO: passar isto para um middleware
   const isTrue = isAvailable === "true";
   const filteredProdutos = produtosLista.filter((produto) => {
     return produto.available === isTrue;
@@ -81,6 +80,7 @@ app.get("/active-produtos", (req, res) => {
   res.send(filteredProdutos);
 });
 
+const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
-  console.log("servidor na porta", PORT);
+  console.log(`Server is running on port ${PORT}`);
 });

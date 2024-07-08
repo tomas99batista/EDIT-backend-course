@@ -1,9 +1,9 @@
 {
-  "name": "aula2-v3",
+  "name": "aula2-v4",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
   "type": "module",
+  "main": "index.js",
   "scripts": {
     "start": "env PORT=3000 node index.js",
     "dev": "env PORT=3000 nodemon index.js"

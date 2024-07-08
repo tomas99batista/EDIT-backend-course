@@ -1,6 +1,7 @@
 {
   "name": "aula2-v1.1",
   "version": "1.0.0",
+  "type": "module",
   "description": "",
   "main": "index.js",
   "scripts": {

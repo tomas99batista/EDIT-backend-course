@@ -14,14 +14,24 @@
 const express = require("express");
 const app = express();
 
+// Este middleware vai ser chamado em todas as rotas
 app.use((req, res, next) => {
-  console.log("Inside middleware");
+  console.log("Dentro do middleware");
   console.log(`${req.method} ${req.url}`);
   next(); // Chama a próxima função
 });
 
+// Outra alternativa:
+// const logRequest = (req, res, next) => {
+//   console.log("Inside middleware");
+//   console.log(`${req.method} ${req.url}`);
+//   next(); // Chama a próxima função
+// };
+
+// app.use(logRequest);
+
 app.get("/", (req, res) => {
-  console.log("After middleware");
+  console.log("Depois do middleware!");
   res.send("Hello World!");
 });
 
@@ -35,7 +45,6 @@ app.listen(3000, () => {
 - req é o request, é o objeto que contém as informações da request, como o método HTTP, a URL, o body, os headers, etc.
 
 - res é a response, é o objeto que contém as funções para responder a request, como `send`, `json`, `status`, etc.
-  -- É possível com o res fazer um redirect, por exemplo, com `res.redirect('/');`.
   -- É possível também enviar um status, por exemplo, com `res.status(404).send('Not Found');`, nem precisando de entrar na API com o `next()`.
 
 - O `next()` é utilizado para chamar a próxima função, se não for chamado a request não será passada para a próxima função.
@@ -55,6 +64,11 @@ app.get("/", namedMiddleware, (req, res) => {
   console.log("After middleware");
   res.send("Hello World!");
 });
+
+// Aqui nao entrou no middleware
+app.get("/about", (req, res) => {
+  res.send("About page");
+});
 ```
 
 - Podemos ter montes de middlewares`- um valida o user, outro valida o pedido, outro imprime outra coisa, etc
@@ -63,7 +77,17 @@ app.get("/", namedMiddleware, (req, res) => {
 app.get("path", middleware1, middleware2, middleware3, (req, res) => {});
 ```
 
-TODO: passar coisas do middleware para o endpoint:
+```javascript
+const namedMiddleware = (req, res, next) => {
+  req.user = {name: "John Doe"};
+  next(); // Chama a próxima função
+};
+
+app.get("/", namedMiddleware, (req, res) => {
+  console.log(req.user);
+  res.send("Hello! ", req.user);
+});
+```
 
 ## Validação de Input
 

@@ -1,28 +1,26 @@
-const express = require("express");
+import express from "express";
 const app = express();
 
+// Este middleware vai ser chamado em todas as rotas
 app.use((req, res, next) => {
-  console.log("Inside middleware !!!");
-  console.log(`Method: ${req.method} URL: ${req.url}`);
+  console.log("DENTRO do middleware");
+  console.log(`${req.method} ${req.url}`);
   next(); // Chama a próxima função
 });
 
-const namedMiddleware = (req, res, next) => {
-  console.log("Aqui só entra quando especificado");
-  next(); // Chama a próxima função
-};
+// Outra alternativa:
+// const logRequest = (req, res, next) => {
+//   console.log("DENTRO do middleware");
+//   console.log(`${req.method} ${req.url}`);
+//   next(); // Chama a próxima função
+// };
+// app.use(logRequest);
 
-// Especificado aqui:
-app.get("/", namedMiddleware, (req, res) => {
-  console.log("After middleware");
+app.get("/", (req, res) => {
+  console.log("DEPOIS do middleware! - DENTRO ENDPOINT");
   res.send("Hello World!");
 });
 
-// app.get("/", (req, res) => {
-//   console.log("After middleware");
-//   res.send("Hello World!");
-// });
-
-app.listen(process.env.PORT, () => {
+app.listen(3000, () => {
   console.log("Server running on port 3000");
 });

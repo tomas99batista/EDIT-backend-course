@@ -1,26 +1,25 @@
-const express = require("express");
+import express from "express";
 const app = express();
 
-app.use((req, res, next) => {
-  console.log("Inside middleware !!!");
-  console.log(`Method: ${req.method} URL: ${req.url}`);
-  next(); // Chama a próxima função
-});
-
-const namedMiddleware = (req, res, next) => {
-  console.log("Aqui só entra quando declarado");
+// middleware numa funcao e apenas usado nos endpoints que queremos
+const addUserToRequest = (req, res, next) => {
+  req.user = {
+    name: "John Doe",
+  };
   next(); // Chama a próxima função
 };
 
-app.get("/", namedMiddleware, (req, res) => {
-  console.log("After middleware");
-  res.send("Hello World!");
+// app.get("path", middleware, (req, res) => {});
+app.get("/", addUserToRequest, (req, res) => {
+  console.log(req.user);
+  res.send("Hello, " + req.user.name);
 });
 
-// app.get("/", (req, res) => {
-//   console.log("After middleware");
-//   res.send("Hello World!");
-// });
+// Aqui nao entrou no middleware
+app.get("/about", (req, res) => {
+  console.log(req.user);
+  res.send("About page");
+});
 
 app.listen(process.env.PORT, () => {
   console.log("Server running on port 3000");
