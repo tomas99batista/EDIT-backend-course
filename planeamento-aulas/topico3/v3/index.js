@@ -15,7 +15,7 @@ app.post("/user", (req, res) => {
   const {error} = schema.validate(req.body);
 
   if (error) {
-    res.status(400).json({error: error.message});
+    return res.status(400).json(error.details);
   } else {
     res.json({message: "User created"});
   }
