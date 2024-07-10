@@ -1,0 +1,19 @@
+meta {
+  name: localhost-post
+  type: http
+  seq: 3
+}
+
+post {
+  url: http://localhost:3000/blog
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "id": 123,
+    "title": "blog n1",
+    "description": "avc123"
+  }
+}

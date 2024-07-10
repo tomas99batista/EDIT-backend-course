@@ -53,7 +53,11 @@ https://weareedit.io/
 - Middleware de Autenticação
 - Criar uma API com Autenticação e JWT
 
-# OPTIONAL: Tópico 6 - Apoio Projeto Final
+# Tópico 6 - TypeScript
+
+# Tópico 7? - Heroku/Hosting
+
+# OPTIONAL: Tópico 8 - Apoio Projeto Final
 
 - Criação de uma API de gestão de produtos que permita:
   - Adicionar um produto

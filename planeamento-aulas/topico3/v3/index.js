@@ -1,42 +1,19 @@
 import express from "express";
-import Joi from "joi";
+import dotenv from "dotenv";
+
+import postsRouter from "./routers/postsRouter.js";
+
+dotenv.config();
 
 const app = express();
+
 app.use(express.json());
+app.use(postsRouter); // Utiliza o router de posts
 
-const schema = Joi.object({
-  name: Joi.string().required().min(3),
-  age: Joi.number().required().min(1),
-  email: Joi.string().email().required(),
-}).required();
-
-// Define the route with validation
-app.post("/user", (req, res) => {
-  const {error} = schema.validate(req.body);
-
-  if (error) {
-    return res.status(400).json(error.details);
-  } else {
-    res.json({message: "User created"});
-  }
-});
-
-// V2:
-// Create the validation middleware
-// const validateUser = (req, res, next) => {
-//   const {error} = schema.validate(req.body);
-//   if (error) {
-//     return res.status(400).json({error: error.message});
-//   }
-//   next();
-// };
-
-// // Use the middleware in the route
-// app.post("/user", validateUser, (req, res) => {
-//   res.json({message: "User created"});
-// });
+// caso tenhamos mais routers, podemos adicionar aqui, por exemplo:
+// app.use(userRouter);
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
+  console.log("server is running (express)", PORT);
 });

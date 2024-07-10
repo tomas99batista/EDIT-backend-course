@@ -32,87 +32,64 @@ let produtosLista = [
   },
 ];
 
-const querySchema = Joi.object({
-  available: Joi.boolean().truthy("true").falsy("false").optional(),
-});
 // GET - retorna todos os produtos
 app.get("/produtos", (req, res) => {
-  // TODO: passar isto para middleware
-  const {error, value} = querySchema.validate(req.query);
-
-  if (error) {
-    return res.status(400).send(error.details[0].message);
-  }
-
-  // Extract validated boolean value for 'available'
-  const isAvailable = value?.available; // Using optional chaining to handle undefined
-
-  if (isAvailable) {
-    // Filter produtosLista based on 'available' boolean value
-    const filteredProdutos = produtosLista.filter((produto) => {
-      return produto.available === isAvailable;
-    });
-    res.send(filteredProdutos);
-  } else {
-    // If 'available' query parameter is not provided, return the entire list
-    res.send(produtosLista);
-  }
+  res.send(produtosLista);
 });
 
-// Define Joi schema for POST request body validation
 const produtoSchema = Joi.object({
-  name: Joi.string().required(),
-  description: Joi.string().required().min(10),
-  available: Joi.boolean().optional().default(true), // Optional field
-}).required();
+  name: Joi.string().required().min(3),
+  description: Joi.string().required().min(5),
+  available: Joi.boolean().required(),
+});
+
 // POST - adiciona novo produto
 app.post("/produtos", (req, res) => {
-  // TODO: passar isto para middleware
-  // Validate the request body against the schema
+  let produto = req.body;
   const {error, value} = produtoSchema.validate(req.body);
-
   if (error) {
-    // If validation fails, return 400 - Bad Request
-    return res.status(400).send(error.details[0].message);
+    return res.status(400).send(error.message);
   }
+  produto = value;
 
   // Calcular o id do novo produto vendo qual é o tamanho do array de produtos existentes
   const produtoId = produtosLista.length + 1;
-
-  // Create a new product object with the validated values and assigned id
-  const newProduto = {
-    id: produtoId,
-    name: value.name,
-    description: value.description,
-    available: value.available,
-  };
+  // Adicionar o id ao produto
+  produto.id = produtoId;
 
   // Adiciona ao array este novo produto
-  produtosLista.push(newProduto);
-
+  produtosLista.push(produto);
   res.send(produtosLista);
 });
 
-const idSchema = Joi.number().integer().positive().required();
 // Rota DELETE para /produtos/:id que recebe um id e deleta o produto com esse id
 app.delete("/produtos/:id", (req, res) => {
-  // TODO: passar isto para middleware
-  const {error, value} = idSchema.validate(req.params.id);
-
-  if (error) {
-    // Se houver erro de validação, retornar 400 - Bad Request
-    return res.status(400).send(error.details[0].message);
-  }
-
-  const id = value;
-  // console.log(id, typeof id);
-  // console.log(req.params.id, typeof req.params.id);
-
+  const id = req.params.id;
   produtosLista = produtosLista.filter((produto) => {
+    // Aqui temos de fazer comparaçao loose porque o id quando vem dos req.params vem como uma string,
+    // por exemplo se passarmos /produtos/1 ele chega como "1", em string
+    // Podemos fazer um cast para inteiro
+    // TODO: iremos resolver isto na prox aula com validação de input e etc
     return produto.id != id;
   });
-
   res.send(produtosLista);
+});
+
+// URL query
+// GET /active-produtos?isAvailable=boolean -> ia a lista dos produtos e faziam filter pelos activos
+// TODO: este endpoint pode chamar-se /produtos e ser integrado com o primeiro get - verificamos se ha req.query.available
+// Se sim filtramos, se nao mandamos de volta a lista toda
+app.get("/active-produtos", (req, res) => {
+  const isAvailable = req.query.available;
+  // Como nao temos validaçao de input, ao ler req.query.available recebemos uma string, ou seja "true"
+  // para obtermos um boolean podemos comparar o isAvailable com "true", se forem iguais dá true, se for diferente dá false
+  // TODO: iremos resolver isto na prox aula com validação de input e etc
+  // TODO: passar isto para um middleware
+  const isTrue = isAvailable === "true";
+  const filteredProdutos = produtosLista.filter((produto) => {
+    return produto.available === isTrue;
+  });
+  res.send(filteredProdutos);
 });
 
 const PORT = process.env.PORT || 3000;
