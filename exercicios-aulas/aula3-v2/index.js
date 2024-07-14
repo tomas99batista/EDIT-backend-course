@@ -1,25 +1,3 @@
-// Id min 0 e maximo 10
-// const numberSchema = Joi.number().required().min(0).max(10);
-// const num = 15;
-// const {error, value} = numberSchema.validate(num);
-// console.log(`Error ${error}, value ${value}`);
-
-// const postSchema = Joi.object({
-//   id: Joi.number().required(),
-//   title: Joi.string().required(),
-//   description: Joi.string().required().min(5),
-//   active: Joi.bool().optional().default(false),
-//   tags: Joi.array(),
-// });
-// const postExample = {
-//   id: 1,
-//   title: "teste",
-//   description: "description teste",
-//   tags: ["teste"],
-// };
-// const {error, value} = postSchema.validate(postExample);
-// console.log(error, value);
-//
 import express from "express";
 import Joi from "joi";
 import dotenv from "dotenv";
@@ -31,44 +9,41 @@ const app = express();
 app.use(express.json());
 
 // {
-//  id: number e obrigatorio
-// title: string e obrigatoria
-// description: string e obrigatoria e min 5 caracteres
-// active: boolean e opcional e false por defeito
+// name: string
+// age: number
 // }
-
-const blogSchema = Joi.object({
-  id: Joi.number().required(),
-  title: Joi.string().required(),
-  description: Joi.string().required().min(5),
-  active: Joi.bool().optional().default(false),
-});
-app.post("/blog", (req, res) => {
-  console.log(req.body);
-  const {error, value} = blogSchema.validate(req.body);
-  if (error) {
-    return res.status(400).send(error.message);
-  }
-  res.send(value);
-});
-
-// const validarBody = (req, res, next) => {
-//   const {error, value} = blogSchema.validate(req.body);
+// const userSchema = Joi.object({
+//   name: Joi.string().required().min(4).max(15),
+//   age: Joi.number().required().min(1).max(99),
+// });
+// app.post("/users", (req, res) => {
+//   const {error, value} = userSchema.validate(req.body, {abortEarly: true});
 //   if (error) {
 //     return res.status(400).send(error.message);
 //   }
-//   req.body = value;
-//   next();
-// };
+//   res.json(value);
+// });
 
-app.post("/blog", validarBody, (req, res) => {
-  console.log(req.body);
-  // const {error, value} = blogSchema.validate(req.body);
-  // if (error) {
-  //   return res.status(400).send(error.message);
-  // }
-  // console.log(error, value);
-  res.send(req.body);
+const userSchema = Joi.object({
+  name: Joi.string().required().min(4).max(15),
+  age: Joi.number().required().min(1).max(99),
+});
+const validateUserMiddleware = (req, res, next) => {
+  const {error, value} = userSchema.validate(req.body);
+
+  if (error) {
+    return res.status(400).send(error.message);
+  }
+  // req.body = value;
+  req.validatedBody = value;
+
+  next();
+};
+
+app.post("/users", validateUserMiddleware, (req, res) => {
+  // console.log("req.body", req.body);
+  console.log("req.validatedBody", req.validatedBody);
+  res.send("Hello world");
 });
 
 app.listen(PORT, () => {

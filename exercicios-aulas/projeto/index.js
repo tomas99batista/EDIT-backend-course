@@ -37,28 +37,31 @@ app.get("/produtos", (req, res) => {
   res.send(produtosLista);
 });
 
+// name
+// description
+// available
 const produtoSchema = Joi.object({
-  name: Joi.string().required().min(3),
+  name: Joi.string().required(),
   description: Joi.string().required().min(5),
-  available: Joi.boolean().required(),
+  available: Joi.boolean().optional().default(true),
 });
-
 // POST - adiciona novo produto
 app.post("/produtos", (req, res) => {
-  let produto = req.body;
   const {error, value} = produtoSchema.validate(req.body);
+
   if (error) {
     return res.status(400).send(error.message);
   }
-  produto = value;
 
   // Calcular o id do novo produto vendo qual é o tamanho do array de produtos existentes
   const produtoId = produtosLista.length + 1;
-  // Adicionar o id ao produto
-  produto.id = produtoId;
 
   // Adiciona ao array este novo produto
-  produtosLista.push(produto);
+  produtosLista.push({
+    // Adicionar o id ao produto
+    id: produtoId,
+    ...value,
+  });
   res.send(produtosLista);
 });
 

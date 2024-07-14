@@ -1,7 +1,6 @@
 import express from "express";
 import postsService from "../services/postsService.js";
-import postSchema from "../schemas/postSchema.js";
-import validateBody from "../middlewares/validationMiddleware.js";
+import postsSchemas from "../schemas/postSchema.js";
 
 const router = express.Router();
 
@@ -10,9 +9,22 @@ router.get("/posts", (req, res) => {
   res.status(200).json(posts);
 });
 
-router.post("/posts", validateBody(postSchema), (req, res) => {
-  const createdPost = postsService.create(req.body);
-  res.status(201).json(createdPost);
+router.get("/posts/:id", (req, res) => {
+  const {error, value} = postsSchemas.getPostByIdSchema.validate(req.params);
+  if (error) {
+    return res.status(400).json({error: error.message});
+  }
+  const posts = postsService.getById(value.id);
+  res.status(200).json(posts);
+});
+
+router.post("/posts", (req, res) => {
+  const {error, value} = postsSchemas.createPostSchema.validate(req.body);
+  if (error) {
+    return res.status(400).json({error: error.message});
+  }
+  const createdPost = postsService.create(value);
+  return res.status(201).json(createdPost);
 });
 
 export default router;

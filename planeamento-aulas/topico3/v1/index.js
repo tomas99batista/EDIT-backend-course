@@ -40,12 +40,12 @@ const app = express();
 // };
 // app.use(addTimeToReq);
 
-// Este middleware vai ser chamado em todas as rotas
-app.use((req, res, next) => {
-  console.log("DENTRO do middleware");
-  console.log(`${req.method} ${req.url}`);
-  next(); // Chama a próxima função
-});
+// ! Este middleware vai ser chamado em todas as rotas
+// app.use((req, res, next) => {
+//   console.log("DENTRO do middleware");
+//   console.log(`${req.method} ${req.url}`);
+//   next(); // Chama a próxima função
+// });
 
 app.get("/", (req, res) => {
   console.log("DEPOIS do middleware! - DENTRO ENDPOINT");
