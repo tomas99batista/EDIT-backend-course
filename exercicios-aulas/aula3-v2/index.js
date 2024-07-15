@@ -41,7 +41,7 @@ const validateUserMiddleware = (req, res, next) => {
 };
 
 app.post("/users", validateUserMiddleware, (req, res) => {
-  // console.log("req.body", req.body);
+  console.log("req.body", req.body);
   console.log("req.validatedBody", req.validatedBody);
   res.send("Hello world");
 });
