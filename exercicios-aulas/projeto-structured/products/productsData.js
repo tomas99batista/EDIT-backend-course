@@ -25,6 +25,11 @@ let productsList = [
   },
 ];
 
+// Obter todos os produtos
+const getProducts = () => {
+  return productsList;
+};
+
 // Adicionar um novo produto
 const createProduct = (newProduct) => {
   const productId = productsList.length + 1;
@@ -36,10 +41,17 @@ const createProduct = (newProduct) => {
   return productsList;
 };
 
-// TODO: Remover um produto existente
+const deleteProduct = (id) => {
+  productsList = productsList.filter((product) => {
+    return product.id != id;
+  });
+  return productsList;
+};
 
 // TODO: Editar um produto existente
 
 export default {
+  getProducts,
   createProduct,
+  deleteProduct,
 };
