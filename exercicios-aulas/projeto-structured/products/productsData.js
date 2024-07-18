@@ -1,4 +1,4 @@
-// Product = {
+//  Product = {
 // id: string
 // name: string
 // description: string
@@ -30,6 +30,14 @@ const getProducts = () => {
   return productsList;
 };
 
+// Obter produtos pelo nome
+const getProductsByName = (productName) => {
+  const products = productsList.filter((product) => {
+    return product.name == productName;
+  });
+  return products;
+};
+
 // Adicionar um novo produto
 const createProduct = (newProduct) => {
   const productId = productsList.length + 1;
@@ -41,6 +49,11 @@ const createProduct = (newProduct) => {
   return productsList;
 };
 
+// TODO: Editar um produto existente
+const updateProduct = (id, productUpdates) => {
+  return productsList;
+};
+
 const deleteProduct = (id) => {
   productsList = productsList.filter((product) => {
     return product.id != id;
@@ -48,10 +61,10 @@ const deleteProduct = (id) => {
   return productsList;
 };
 
-// TODO: Editar um produto existente
-
 export default {
   getProducts,
+  getProductsByName,
   createProduct,
+  updateProduct,
   deleteProduct,
 };

@@ -5,9 +5,20 @@ const getProducts = () => {
   return products;
 };
 
+const getProductsByName = (productName) => {
+  const products = productsData.getProductsByName(productName);
+  return products;
+};
+
 const createProduct = (newProduct) => {
   const updatedProducts = productsData.createProduct(newProduct);
   return updatedProducts;
+};
+
+// TODO: Editar um produto existente
+const updateProduct = (id, productUpdates) => {
+  const updatedProduct = productsData.updateProduct(id, productUpdates);
+  return updatedProduct;
 };
 
 const deleteProduct = (id) => {
@@ -15,10 +26,10 @@ const deleteProduct = (id) => {
   return updatedProducts;
 };
 
-// TODO: Editar um produto existente
-
 export default {
   getProducts,
+  getProductsByName,
   createProduct,
+  updateProduct,
   deleteProduct,
 };

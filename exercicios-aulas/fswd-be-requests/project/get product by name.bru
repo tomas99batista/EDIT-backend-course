@@ -1,0 +1,15 @@
+meta {
+  name: get product by name
+  type: http
+  seq: 2
+}
+
+get {
+  url: http://localhost:3000/products?name=Pastel de Queijo
+  body: json
+  auth: none
+}
+
+query {
+  name: Pastel de Queijo
+}
