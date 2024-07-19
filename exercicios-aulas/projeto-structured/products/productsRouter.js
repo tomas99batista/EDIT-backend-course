@@ -7,6 +7,7 @@ const router = express.Router();
 router.get("/products", (req, res) => {
   const name = req.query.name;
 
+  // TODO: implementar regex para pesquisar todos os produtos que contenham $regex
   if (name) {
     const products = productsService.getProductsByName(name);
     return res.status(200).json(products);
