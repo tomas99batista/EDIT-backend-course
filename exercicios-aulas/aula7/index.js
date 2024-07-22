@@ -25,7 +25,7 @@ const dbOperations = async () => {
   };
 
   const createdPost = await db.collection(collection).insertOne(post);
-  console.log(createdPost);
+  console.log(createdPost.insertedId);
 
   const postByTitle = await db
     .collection(collection)
