@@ -52,6 +52,17 @@ const dbOperations = async () => {
 
   console.log("UPDATED POST");
   console.log(updatedPost);
+
+  const deletePost = await db.collection(collection).deleteOne({
+    _id: createdPost.insertedId,
+  });
+  console.log("DELETED POST:");
+  console.log(deletePost);
+
+  const findDeletePost = await db.collection(collection).findOne({
+    _id: createdPost.insertedId,
+  });
+  console.log(findDeletePost);
 };
 
 await dbOperations();
