@@ -1,28 +1,28 @@
 import productsData from "./productsData.js";
 
-const getProducts = () => {
-  const products = productsData.getProducts();
+const getProducts = async () => {
+  const products = await productsData.getProducts();
   return products;
 };
 
-const getProductsByName = (productName) => {
-  const products = productsData.getProductsByName(productName);
+const getProductsByName = async (productName) => {
+  const products = await productsData.getProductsByName(productName);
   return products;
 };
 
-const createProduct = (newProduct) => {
-  const updatedProducts = productsData.createProduct(newProduct);
+const createProduct = async (newProduct) => {
+  const updatedProducts = await productsData.createProduct(newProduct);
   return updatedProducts;
 };
 
 // TODO: Editar um produto existente
-const updateProduct = (id, productUpdates) => {
-  const updatedProduct = productsData.updateProduct(id, productUpdates);
+const updateProduct = async (id, productUpdates) => {
+  const updatedProduct = await productsData.updateProduct(id, productUpdates);
   return updatedProduct;
 };
 
-const deleteProduct = (id) => {
-  const updatedProducts = productsData.deleteProduct(id);
+const deleteProduct = async (id) => {
+  const updatedProducts = await productsData.deleteProduct(id);
   return updatedProducts;
 };
 

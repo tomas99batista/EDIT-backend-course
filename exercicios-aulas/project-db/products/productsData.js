@@ -1,64 +1,38 @@
-//  Product = {
-// id: string
-// name: string
-// description: string
-// imageUrl: string
-// price: number
-// }
+import dbService from "../db/mongo.js";
 
-let productsList = [
-  {
-    id: 1,
-    name: "Pastel de Queijo",
-    description: "Pastel de Queijo da Alameda com Frango e Queijo",
-    imageUrl:
-      "https://www.sabornamesa.com.br/media/k2/items/cache/990810f9242641a8e264ce996a78ed28_XL.jpg",
-    price: 5,
-  },
-  {
-    id: 2,
-    name: "Coxinha de Frango",
-    description: "Coxinha de Frango com Queijo Catupiry",
-    imageUrl:
-      "https://benditosalgado.com.br/wp-content/uploads/2020/04/Coxinha-Frango-Catupiry.jpg",
-    price: 2.5,
-  },
-];
+const productsCollection = "products";
 
 // Obter todos os produtos
-const getProducts = () => {
-  return productsList;
+const getProducts = async () => {
+  const db = await dbService.getDb();
+  const products = db.collection(productsCollection).find().toArray();
+  return products;
 };
 
 // Obter produtos pelo nome
-const getProductsByName = (productName) => {
-  const products = productsList.filter((product) => {
-    return product.name == productName;
-  });
+const getProductsByName = async (productName) => {
+  const db = await dbService.getDb();
+  const products = db
+    .collection(productsCollection)
+    .find({
+      name: productName,
+    })
+    .toArray();
   return products;
 };
 
 // Adicionar um novo produto
-const createProduct = (newProduct) => {
-  const productId = productsList.length + 1;
-  const newProductWithId = {
-    id: productId,
-    ...newProduct,
-  };
-  productsList.push(newProductWithId);
-  return productsList;
+const createProduct = async (newProduct) => {
+  const db = await dbService.getDb();
 };
 
 // TODO: Editar um produto existente
-const updateProduct = (id, productUpdates) => {
-  return productsList;
+const updateProduct = async (id, productUpdates) => {
+  const db = await dbService.getDb();
 };
 
-const deleteProduct = (id) => {
-  productsList = productsList.filter((product) => {
-    return product.id != id;
-  });
-  return productsList;
+const deleteProduct = async (id) => {
+  const db = await dbService.getDb();
 };
 
 export default {

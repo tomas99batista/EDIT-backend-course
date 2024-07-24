@@ -4,41 +4,41 @@ import productsSchemas from "./productsSchemas.js";
 
 const router = express.Router();
 
-router.get("/products", (req, res) => {
+router.get("/products", async (req, res) => {
+  // localhost:3000/products?name=coxinha
   const name = req.query.name;
 
-  // TODO: implementar regex para pesquisar todos os produtos que contenham $regex
   if (name) {
-    const products = productsService.getProductsByName(name);
+    const products = await productsService.getProductsByName(name);
     return res.status(200).json(products);
   }
 
-  const products = productsService.getProducts();
+  const products = await productsService.getProducts();
   res.json(products);
 });
 
-router.post("/products", (req, res) => {
+router.post("/products", async (req, res) => {
   const {error, value} = productsSchemas.createProductSchema.validate(req.body);
 
   if (error) {
     return res.status(400).send(error.message);
   }
 
-  const updatedProductsList = productsService.createProduct(value);
+  const updatedProductsList = await productsService.createProduct(value);
   res.json(updatedProductsList);
 });
 
 // TODO: Editar um produto existente
-router.put("/products/:id", (req, res) => {
-  const updatedProducts = productsService.updateProduct(
+router.put("/products/:id", async (req, res) => {
+  const updatedProducts = await productsService.updateProduct(
     req.params.id,
     req.body
   );
   res.json(updatedProducts);
 });
 
-router.delete("/products/:id", (req, res) => {
-  const updatedProducts = productsService.deleteProduct(req.params.id);
+router.delete("/products/:id", async (req, res) => {
+  const updatedProducts = await productsService.deleteProduct(req.params.id);
   res.json(updatedProducts);
 });
 
