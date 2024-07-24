@@ -34,7 +34,7 @@ const seedProductsDb = async () => {
   try {
     // CLEAR DB:
     console.log("\nClearing DB...");
-    await db.collection("products").deleteMany({});
+    await db.collection("products").deleteMany();
     console.log("DB clean!\n");
 
     // SEED DB:

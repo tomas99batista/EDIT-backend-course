@@ -24,8 +24,8 @@ router.post("/products", async (req, res) => {
     return res.status(400).send(error.message);
   }
 
-  const updatedProductsList = await productsService.createProduct(value);
-  res.json(updatedProductsList);
+  const createdProduct = await productsService.createProduct(value);
+  res.status(201).json(createdProduct);
 });
 
 // TODO: Editar um produto existente
@@ -38,8 +38,10 @@ router.put("/products/:id", async (req, res) => {
 });
 
 router.delete("/products/:id", async (req, res) => {
-  const updatedProducts = await productsService.deleteProduct(req.params.id);
-  res.json(updatedProducts);
+  const deletedProduct = await productsService.deleteProduct(req.params.id);
+  // OPTION 2: - enviar ok produto apagado
+  res.send("Product deleted");
+  // res.json(deletedProduct);
 });
 
 export default router;
