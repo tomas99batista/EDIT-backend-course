@@ -1,0 +1,17 @@
+meta {
+  name: update product
+  type: http
+  seq: 4
+}
+
+put {
+  url: http://localhost:3000/products
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "price": 10
+  }
+}

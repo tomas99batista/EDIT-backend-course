@@ -21,27 +21,30 @@ router.post("/products", async (req, res) => {
   const {error, value} = productsSchemas.createProductSchema.validate(req.body);
 
   if (error) {
-    return res.status(400).send(error.message);
+    return res.status(400).send({message: error.message});
   }
 
   const createdProduct = await productsService.createProduct(value);
   res.status(201).json(createdProduct);
 });
 
-// TODO: Editar um produto existente
 router.put("/products/:id", async (req, res) => {
-  const updatedProducts = await productsService.updateProduct(
-    req.params.id,
-    req.body
-  );
-  res.json(updatedProducts);
+  const result = await productsService.updateProduct(req.params.id, req.body);
+  if (!result || result.modifiedCount === 0) {
+    return res
+      .status(404)
+      .json({message: "The Product you tried to update was not found."});
+  }
+  res.json(result);
 });
 
 router.delete("/products/:id", async (req, res) => {
-  const deletedProduct = await productsService.deleteProduct(req.params.id);
-  // OPTION 2: - enviar ok produto apagado
-  res.send("Product deleted");
-  // res.json(deletedProduct);
+  console.log(req.params.id);
+  const result = await productsService.deleteProduct(req.params.id);
+  if (!result || result.deletedCount === 0) {
+    return res.status(404).send({message: "Product not found."});
+  }
+  res.status(200).json({message: "Product deleted successfully."});
 });
 
 export default router;

@@ -3,7 +3,7 @@ import dbService from "../db/mongo.js";
 
 const productsCollection = "products";
 
-// Obter todos os produtos
+// Get all products
 const getProducts = async () => {
   try {
     const db = await dbService.getDb();
@@ -14,7 +14,7 @@ const getProducts = async () => {
   }
 };
 
-// Obter produto pelo id
+// Get product by ID
 const getProductById = async (productId) => {
   try {
     const db = await dbService.getDb();
@@ -27,7 +27,7 @@ const getProductById = async (productId) => {
   }
 };
 
-// Obter produtos pelo nome
+// Get products by name
 const getProductsByName = async (productName) => {
   try {
     const db = await dbService.getDb();
@@ -39,34 +39,47 @@ const getProductsByName = async (productName) => {
       .toArray();
     return products;
   } catch (error) {
-    console.log(error);
+    console.error(error);
   }
 };
 
+// Create a new product
 const createProduct = async (newProduct) => {
   try {
     const db = await dbService.getDb();
-    const createdProduct = await db
+    const result = await db
       .collection(productsCollection)
       .insertOne(newProduct);
-    return createdProduct;
+    return result;
   } catch (error) {
     console.error(error);
   }
 };
 
-// TODO: Editar um produto existente
+// Update an existing product
 const updateProduct = async (id, productUpdates) => {
-  const db = await dbService.getDb();
+  try {
+    const db = await dbService.getDb();
+    const result = await db.collection(productsCollection).updateOne(
+      {_id: new ObjectId(id)},
+      {
+        $set: productUpdates,
+      }
+    );
+    return result;
+  } catch (error) {
+    console.error(error);
+  }
 };
 
+// Delete a product
 const deleteProduct = async (id) => {
   try {
     const db = await dbService.getDb();
-    const deletedProduct = await db
+    const result = await db
       .collection(productsCollection)
       .deleteOne({_id: new ObjectId(id)});
-    return deletedProduct;
+    return result;
   } catch (error) {
     console.error(error);
   }

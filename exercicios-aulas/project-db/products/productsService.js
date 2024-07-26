@@ -11,24 +11,23 @@ const getProductsByName = async (productName) => {
 };
 
 const createProduct = async (newProduct) => {
-  const createdProduct = await productsData.createProduct(newProduct);
+  const result = await productsData.createProduct(newProduct);
   // OPTION 1: - retornar todos os produtos
   // const allProducts = getProducts();
   // return allProducts;
   // OPTION 2: - retornar o produto certo
-  const product = await productsData.getProductById(createdProduct.insertedId);
+  const product = await productsData.getProductById(result.insertedId);
   return product;
 };
 
-// TODO: Editar um produto existente
 const updateProduct = async (id, productUpdates) => {
-  const updatedProduct = await productsData.updateProduct(id, productUpdates);
-  return updatedProduct;
+  const result = await productsData.updateProduct(id, productUpdates);
+  return result;
 };
 
 const deleteProduct = async (id) => {
-  const deletedProducts = await productsData.deleteProduct(id);
-  return deletedProducts;
+  const result = await productsData.deleteProduct(id);
+  return result;
   // OPTION 1: enviar a lista toda atualizada (getProducts())
   // const allProducts = getProducts();
   // return allProducts;
