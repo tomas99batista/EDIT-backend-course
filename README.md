@@ -45,18 +45,6 @@ https://weareedit.io/
 - Mongoose
 - Criar uma API com MongoDB e Mongoose
 
-# Tópico 5 - Autenticação e JWT
-
-- Autenticação
-- JWT
-- Bcrypt
-- Middleware de Autenticação
-- Criar uma API com Autenticação e JWT
-
-# Tópico 6 - TypeScript
-
-# Tópico 7? - Heroku/Hosting
-
 # OPTIONAL: Tópico 8 - Apoio Projeto Final
 
 - Criação de uma API de gestão de produtos que permita:
@@ -65,6 +53,3 @@ https://weareedit.io/
   - Listar um produto específico
   - Atualizar um produto
   - Remover um produto
-  - Login e registo de utilizadores
-  - Autenticação com JWT
-  - OPTIONAL: Testes Unitários
