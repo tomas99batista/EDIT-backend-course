@@ -1,7 +1,6 @@
 import Joi from "joi";
 
 //  Order = {
-// id: number
 // items: {
 //  productId: string
 //  quantity: number

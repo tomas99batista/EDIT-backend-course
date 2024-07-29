@@ -17,19 +17,15 @@ export const ProductsList = () => {
     getProducts();
   }, [products]);
 
-  const deleteProduct = async (productId) => {
-    try {
-      const result = await fetch(
-        `http://localhost:3000/products/${productId}`,
-        {
-          method: "DELETE",
-        }
-      );
-      console.log(result);
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  // const deleteProduct = async (productId) => {
+  //   try {
+  //     await fetch(`http://localhost:3000/products/${productId}`, {
+  //       method: "DELETE",
+  //     });
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
 
   return (
     <div>
@@ -39,7 +35,7 @@ export const ProductsList = () => {
           <span>
             {product.name} - {product.price}
           </span>
-          <button onClick={() => deleteProduct(product._id)}>Delete</button>
+          {/* <button onClick={() => deleteProduct(product._id)}>Delete</button> */}
         </div>
       ))}
     </div>
